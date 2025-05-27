@@ -3,69 +3,83 @@
 ## **Description du Business**
 Vente de cafés via une machine automatique .
 
-## **Key Objects (Entités Clés)**
-- **MachineACafé** : Contient la logique de préparation et de gestion des stocks.
-- **Client** : Utilisateur qui commande un café.
-- **Café** : Produit final (différents types).
-- **Stock** : Gère les consommables (sucre, café, lait, etc.).
-- **Monnayeur** : Gère l'argent inséré et la monnaie rendue.
+## Scénarios d'Utilisation  (Use Cases)
 
-## **UseKeys (Composants Nécessaires)**
-- **Café** (grains ou poudre)  
-- **Sucre**  
-- **Cuillère** (pour mélanger)  
-- **Lait** (pour les options "au lait")  
-- **Tasse** (récipient pour servir)  
-- **Monnayeur** (pour accepter les paiements)  
+### 1. Paiement
 
----
+**Acteurs** : Client, Monnayeur
+**Étapes** :
 
-## **Types de Cafés (Produits)**
-1. **Café Simple** : Café noir + option sucre.
-2. **Café au Lait** : Café + lait + option sucre.
-3. **Café VIP** : Café haut de gamme (ex : double espresso, mousse de lait, sucre vanillé).
+* Le client insère de l’argent.
+* Le système vérifie si le montant est suffisant.
+* S’il y a un excédent, le monnayeur rend la monnaie.
+* Sinon, il affiche un message d’erreur.
 
----
+### 2. Choix du Café
 
-## **Use Cases (Cas d'Utilisation)**
-1. **Commander un Café**  
-   - Le client sélectionne un type de café.  
-   - La machine vérifie le stock et le paiement.  
-   - Si OK, prépare et sert le café.  
+**Acteurs** : Client, MachineACafé
+**Étapes** :
 
-2. **Insérer de l'Argent**  
-   - Le client insère des pièces/billets.  
-   - La machine valide le montant et met à jour le crédit.  
+* Le client sélectionne un type de café.
+* Le système vérifie si les ingrédients nécessaires sont disponibles.
+* S’il manque un ingrédient, il notifie l’utilisateur.
 
-3. **Gérer le Stock**  
-   - Alerte si niveau de sucre/café/lait/tasses est faible.  
+### 3. Préparation du Café
 
-4. **Rendre la Monnaie**  
-   - Si le client annule ou paie trop, la machine rend la monnaie.  
+**Acteurs** : MachineACafé
+**Étapes** :
+
+* Préparation des ingrédients.
+* Temps d’attente.
+* Livraison dans la tasse.
+
+### 4. Livraison du Café
+
+**Acteurs** : MachineACafé, Client
+**Étapes** :
+
+* Le client récupère sa boisson.
+* Le stock est automatiquement mis à jour.
 
 ---
 
-## **Errors (Erreurs Possibles)**
-- **Paiement Insuffisant** → "Veuillez insérer plus d'argent."  
-- **Stock Épuisé** → "Ingrédient manquant. Choix indisponible."  
-- **Tasse Manquante** → "Aucune tasse disponible."  
-- **Monnaie Non Rendue** → "Erreur de monnayeur. Contactez le support."  
+## Cas d’Erreurs Supplémentaires
+
+| Erreur                      | Message Utilisateur                                 |
+| --------------------------- | --------------------------------------------------- |
+| Plus de lumière (panne LED) | "Éclairage inactif. Merci de contacter le support." |
+| Plus d’eau                  | "Réservoir vide. Veuillez patienter..."             |
+| Plus de parfum (VIP)        | "Arôme indisponible temporairement."                |
+| Temps de réponse trop long  | "Temps d’attente prolongé. Veuillez réessayer."     |
 
 ---
 
-## **Diagramme Simplifié (Exemple)**
-```
-sequenceDiagram
-    Client ->> MachineACafé: Sélectionne "Café au Lait"
-    MachineACafé->>Monnayeur: Vérifie paiement
-    alt Paiement OK
-        MachineACafé->>Stock: Vérifie ingrédients
-        alt Stock OK
-            MachineACafé->>MachineACafé: Prépare café
-            MachineACafé->>Client: Serre café
-        else Stock KO
-            MachineACafé->>Client: "Ingrédient manquant"
-        end
-    else Paiement KO
-        MachineACafé->>Client: "Paiement insuffisant"
-    end
+## Modélisation
+
+### Classes et Relations :
+
+* **MachineACafé**
+
+  * Attributs : `stock`, `monnayeur`
+  * Méthodes : `choisirCafé()`, `préparerCafé()`, `verifierStock()`
+* **Client**
+
+  * Attributs : `solde`, `préférences`
+  * Méthodes : `payer()`, `choisirCafé()`
+* **Café**
+
+  * Attributs : `nom`, `prix`, `ingrédients`
+* **Stock**
+
+  * Attributs : `quantité_café`, `quantité_lait`, `quantité_sucre`, `tasses`, `eau`
+  * Méthodes : `mettreAJour()`, `vérifierDisponibilité()`
+* **Monnayeur**
+
+  * Attributs : `fonds_disponibles`
+  * Méthodes : `accepterPaiement()`, `rendreMonnaie()`
+
+**Relations :**
+
+* Le `Client` interagit avec la `MachineACafé`.
+* La `MachineACafé` utilise le `Stock`, le `Monnayeur` et prépare un `Café`.
+
