@@ -83,3 +83,4 @@ Vente de cafés via une machine automatique .
 * Le `Client` interagit avec la `MachineACafé`.
 * La `MachineACafé` utilise le `Stock`, le `Monnayeur` et prépare un `Café`.
 
+# Spec binome : https://github.com/Zo-Tsilavina/prog-5-d5/blob/main/readme.md
