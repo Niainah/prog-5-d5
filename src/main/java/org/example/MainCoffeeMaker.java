@@ -40,7 +40,7 @@ public class MainCoffeeMaker {
             return;
         }
 
-        Map<String, Integer> recipe = machine.getCoffeeRecipe(selectedType);
+        Map<String, Integer> recipe = machine.getCoffee(selectedType);
         boolean success = machine.createCoffee(recipe);
 
         if (success) {

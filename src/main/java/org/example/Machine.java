@@ -19,39 +19,39 @@ public class Machine {
     }
 
     public boolean createCoffee(Map<String, Integer> requiredIngredients) {
-        for (Map.Entry<String, Integer> entry : requiredIngredients.entrySet()) {
-            String ingredient = entry.getKey();
-            int quantityNeeded = entry.getValue();
-            if (ingredients.getOrDefault(ingredient, 0) < quantityNeeded) {
+        for (String ingredient : requiredIngredients.keySet()) {
+            int quantityNeeded = requiredIngredients.get(ingredient);
+            int quantityAvailable = ingredients.getOrDefault(ingredient, 0);
+
+            if (quantityAvailable < quantityNeeded) {
                 return false;
             }
         }
 
-        for (Map.Entry<String, Integer> entry : requiredIngredients.entrySet()) {
-            ingredients.put(entry.getKey(), ingredients.get(entry.getKey()) - entry.getValue());
+        for (String ingredient : requiredIngredients.keySet()) {
+            int quantityUsed = requiredIngredients.get(ingredient);
+            int currentStock = ingredients.get(ingredient);
+            ingredients.put(ingredient, currentStock - quantityUsed);
         }
-
         return true;
     }
 
-    public Map<String, Integer> getCoffeeRecipe(CoffeeType type) {
+
+    public Map<String, Integer> getCoffee(CoffeeType type) {
         Map<String, Integer> recipe = new HashMap<>();
-        switch (type) {
-            case SIMPLE_COFFEE:
-                recipe.put("coffee", 1);
-                recipe.put("sugar", 1);
-                break;
-            case COFFEE_WITH_MILK:
-                recipe.put("coffee", 1);
-                recipe.put("milk", 1);
-                recipe.put("sugar", 1);
-                break;
-            case VIP_COFFEE:
-                recipe.put("coffee", 2);
-                recipe.put("milk", 2);
-                recipe.put("sugar", 2);
-                break;
+        if (type == CoffeeType.SIMPLE_COFFEE) {
+            recipe.put("coffee", 1);
+            recipe.put("sugar", 1);
+        } else if (type == CoffeeType.COFFEE_WITH_MILK) {
+            recipe.put("coffee", 1);
+            recipe.put("milk", 1);
+            recipe.put("sugar", 1);
+        } else if (type == CoffeeType.VIP_COFFEE) {
+            recipe.put("coffee", 2);
+            recipe.put("milk", 2);
+            recipe.put("sugar", 2);
         }
         return recipe;
     }
+
 }
