@@ -2,15 +2,11 @@ package org.example;
 
 import java.util.HashMap;
 import java.util.Map;
-
 public class Machine {
     private final Map<String, Integer> ingredients;
 
-    public Machine() {
-        ingredients = new HashMap<>();
-        ingredients.put("coffee", 10);
-        ingredients.put("milk", 10);
-        ingredients.put("sugar", 10);
+    public Machine(Map<String, Integer> ingredients) {
+        this.ingredients = ingredients;
     }
 
     public double applyDiscount(double amount) {

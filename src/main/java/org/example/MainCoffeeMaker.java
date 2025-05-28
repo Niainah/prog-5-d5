@@ -1,12 +1,16 @@
 package org.example;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 public class MainCoffeeMaker {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        Machine machine = new Machine();
-
+        Map<String, Integer> ingredients = new HashMap<>();
+        ingredients.put("coffee", 10);
+        ingredients.put("milk", 0);
+        ingredients.put("sugar", 10);
+        Machine machine = new Machine(ingredients);
         System.out.println("Select a coffee type:");
         System.out.println("1. Simple Coffee");
         System.out.println("2. Coffee with Milk");
