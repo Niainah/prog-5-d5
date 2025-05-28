@@ -8,9 +8,10 @@ public class MainCoffeeMaker {
         Scanner scanner = new Scanner(System.in);
         Map<String, Integer> ingredients = new HashMap<>();
         ingredients.put("coffee", 10);
-        ingredients.put("milk", 0);
+        ingredients.put("milk", 10);
         ingredients.put("sugar", 10);
         Machine machine = new Machine(ingredients);
+
         System.out.println("Select a coffee type:");
         System.out.println("1. Simple Coffee");
         System.out.println("2. Coffee with Milk");
@@ -32,9 +33,9 @@ public class MainCoffeeMaker {
         double amountPaid = scanner.nextDouble();
 
         double price = switch (selectedType) {
-            case SIMPLE_COFFEE -> 2.0;
-            case COFFEE_WITH_MILK -> 3.0;
-            case VIP_COFFEE -> 5.0;
+            case SIMPLE_COFFEE -> 200.0;
+            case COFFEE_WITH_MILK -> 500.0;
+            case VIP_COFFEE -> 800.0;
         };
 
         double discountedPrice = machine.applyDiscount(price);
@@ -49,7 +50,7 @@ public class MainCoffeeMaker {
 
         if (success) {
             System.out.println("Preparing your coffee...");
-            System.out.println("Here it is your coffee!");
+            System.out.println("Here it is your coffee! Rest money: "+(amountPaid-discountedPrice));
         } else {
             System.out.println("Insufficient ingredients");
         }
