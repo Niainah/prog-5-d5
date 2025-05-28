@@ -1,0 +1,56 @@
+package org.example;
+
+import java.util.Map;
+import java.util.Scanner;
+public class MainCoffeeMaker {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Machine machine = new Machine();
+
+        System.out.println("Select a coffee type:");
+        System.out.println("1. Simple Coffee");
+        System.out.println("2. Coffee with Milk");
+        System.out.println("3. VIP Coffee");
+
+        int choice = scanner.nextInt();
+        CoffeeType selectedType;
+
+        switch (choice) {
+            case 1: selectedType = CoffeeType.SIMPLE_COFFEE; break;
+            case 2: selectedType = CoffeeType.COFFEE_WITH_MILK; break;
+            case 3: selectedType = CoffeeType.VIP_COFFEE; break;
+            default:
+                System.out.println("Invalid choice.");
+                return;
+        }
+
+        System.out.print("Enter amount paid (€): ");
+        double amountPaid = scanner.nextDouble();
+
+        double price = switch (selectedType) {
+            case SIMPLE_COFFEE -> 2.0;
+            case COFFEE_WITH_MILK -> 3.0;
+            case VIP_COFFEE -> 5.0;
+        };
+
+        double discountedPrice = machine.applyDiscount(price);
+
+        if (amountPaid < discountedPrice) {
+            System.out.println("Insufficient funds.");
+            return;
+        }
+
+        Map<String, Integer> recipe = machine.getCoffeeRecipe(selectedType);
+        boolean success = machine.createCoffee(recipe);
+
+        if (success) {
+            System.out.println("Preparing your coffee...");
+            System.out.println("Your coffee is ready. Thank you!");
+        } else {
+            System.out.println("Insufficient ingredients. Please try again later.");
+        }
+    }
+}
+
+
+
