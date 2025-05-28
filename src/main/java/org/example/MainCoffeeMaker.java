@@ -24,7 +24,7 @@ public class MainCoffeeMaker {
                 return;
         }
 
-        System.out.print("Enter amount paid (€): ");
+        System.out.print("Enter amount paid (Ar): ");
         double amountPaid = scanner.nextDouble();
 
         double price = switch (selectedType) {
@@ -36,7 +36,7 @@ public class MainCoffeeMaker {
         double discountedPrice = machine.applyDiscount(price);
 
         if (amountPaid < discountedPrice) {
-            System.out.println("Insufficient funds.");
+            System.out.println("Payment failed");
             return;
         }
 
@@ -45,9 +45,9 @@ public class MainCoffeeMaker {
 
         if (success) {
             System.out.println("Preparing your coffee...");
-            System.out.println("Your coffee is ready. Thank you!");
+            System.out.println("Here it is your coffee!");
         } else {
-            System.out.println("Insufficient ingredients. Please try again later.");
+            System.out.println("Insufficient ingredients");
         }
     }
 }
